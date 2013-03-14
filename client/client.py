@@ -3,6 +3,9 @@ import sys
 import urllib
 import httplib
 
+#Change the SERVER_URL according to Server IP.
+#By default, configured to localhost:8000
+SERVER_URL = '127.0.0.1:8000'
 
 def readsource(filepath):
     f=open(filepath)
@@ -13,21 +16,13 @@ def readsource(filepath):
     filename = os.path.basename(filepath)
     return data, filename
 
-
-
 def post(text,filename):
     data = urllib.urlencode({'filename': filename, 'text':text})
-
-    h = httplib.HTTPConnection('192.168.1.102:8000')
-
+    h = httplib.HTTPConnection(SERVER_URL)
     headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
-
     h.request('POST', '/compile/', data, headers)
-
     r = h.getresponse()
-
     print r.read()
-
 
 def main():
     path = sys.argv[1]
@@ -36,5 +31,3 @@ def main():
 
 if __name__ == '__main__':
      main()
-    
-    
