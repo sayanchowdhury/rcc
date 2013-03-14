@@ -12,10 +12,12 @@ def compile(request):
     text = request.POST.get('text', False)
 
     if filename is False:
-        return HttpResponse(json.dumps({'error':'Invalid filename'}))
+        return HttpResponse(json.dumps({'error':'Invalid filename'}),
+                            content_type="application/json")
 
     if text is False:
-        return HttpResponse(json.dumps({'error':'Empty file'}))
+        return HttpResponse(json.dumps({'error':'Empty file'}),
+                            content_type="application/json")
 
     try:
         queue = Queue('rcc')
@@ -23,6 +25,14 @@ def compile(request):
         task = Task({'filename':filename, 'text':text})
         job = queue.enqueue(task)
     except:
-        return HttpResponse(json.dumps({'error':'Error creating Job'}))
+        return HttpResponse(json.dumps({'error':'Error creating Job'}),
+                            content_type="application/json")
 
-    return HttpResponse(json.dumps({'status':'Job Created'}))
+    while True:
+        if job.result is None:
+            continue
+        break
+
+    return HttpResponse(json.dumps({'status' : 'Job Created',
+                                    'output' : job.result}),
+                        content_type="application/json")
