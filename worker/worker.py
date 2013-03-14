@@ -33,8 +33,6 @@ def main():
                 queue.send(task, err1, 120)
             else:
                 queue.send(task, out1, 120)
-        
-    #print system(x)
 
 def system(cmd):
     """
