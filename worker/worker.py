@@ -14,7 +14,7 @@ def file_read(file_name):
 
 
 def main():
-    queue = Queue('test')
+    queue = Queue('rcc')
     queue.connect()
     while True:
         task = queue.wait()

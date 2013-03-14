@@ -18,7 +18,7 @@ def compile(request):
         return HttpResponse(json.dumps({'error':'Empty file'}))
 
     try:
-        queue = Queue('test')
+        queue = Queue('rcc')
         queue.connect()
         task = Task({'filename':filename, 'text':text})
         job = queue.enqueue(task)
