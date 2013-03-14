@@ -27,7 +27,7 @@ def post(text,filename):
 def main():
     path = sys.argv[1]
     text,filename = readsource(path)
-    post(text, filename)  
+    post(text, filename)
 
 if __name__ == '__main__':
-     main()
+    main()
