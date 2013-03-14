@@ -12,11 +12,11 @@ def compile(request):
     text = request.POST.get('text', False)
 
     if filename is False:
-        return HttpResponse(json.dumps({'error':'Invalid filename'}),
+        return HttpResponse(json.dumps({'output':'Invalid filename'}),
                             content_type="application/json")
 
     if text is False:
-        return HttpResponse(json.dumps({'error':'Empty file'}),
+        return HttpResponse(json.dumps({'output':'Empty file'}),
                             content_type="application/json")
 
     try:
@@ -25,7 +25,7 @@ def compile(request):
         task = Task({'filename':filename, 'text':text})
         job = queue.enqueue(task)
     except:
-        return HttpResponse(json.dumps({'error':'Error creating Job'}),
+        return HttpResponse(json.dumps({'output':'Error creating Job'}),
                             content_type="application/json")
 
     while True:
@@ -33,6 +33,5 @@ def compile(request):
             continue
         break
 
-    return HttpResponse(json.dumps({'status' : 'Job Created',
-                                    'output' : job.result}),
+    return HttpResponse(json.dumps({'output' : job.result}),
                         content_type="application/json")
