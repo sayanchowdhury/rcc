@@ -5,14 +5,6 @@ import subprocess
 import sys
 from retask.queue import Queue, Job
 
-
-def file_read(file_name):
-    f=open(file_name)
-    content=f.read()
-    f.close()
-    return content,file_name
-
-
 def main():
     queue = Queue('rcc')
     queue.connect()
